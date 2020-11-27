@@ -31,6 +31,14 @@ public class ToDoList {
 	public Collection<Task> getAllTasks() {
 		return tasks.values();
 	}
+	public Collection<Task> getIncompletedTask(){
+		Collection<Task> incompletedTasks = new ArrayList<Task> ();
+		Collection<Task> allTasks = new ArrayList<Task> ();
+		allTasks = getAllTasks();
+		for (Task task: allTasks) 
+			if (task.isComplete() == false) incompletedTasks.add(task);
+		return incompletedTasks;
+	}
 	public Collection<Task> getCompletedTasks() {
 		Collection<Task> completedTasks = new ArrayList<Task> ();
 		Collection<Task> allTasks = new ArrayList<Task> ();
@@ -39,7 +47,8 @@ public class ToDoList {
 			if (task.isComplete() == true) completedTasks.add(task);
 		return completedTasks;
 	}
-	public boolean editDescription(String oldDesc, String newDesc) throws TaskDescriptionAlreadyExistsException {
+
+  public boolean editDescription(String oldDesc, String newDesc) throws TaskDescriptionAlreadyExistsException {
 		Task existingTask = getTask(newDesc);
 		if (existingTask != null) {
 			throw new TaskDescriptionAlreadyExistsException();
@@ -52,5 +61,11 @@ public class ToDoList {
 		} else {
 			return false;
 		}
+	}
+	
+	public int getNumOfIncompleteTask() {
+		int noOfCompletedTask = this.getCompletedTasks().size();
+		int totalNumberOfTask = this.getAllTasks().size();
+		return totalNumberOfTask - noOfCompletedTask;
 	}
 }

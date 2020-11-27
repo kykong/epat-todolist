@@ -41,10 +41,23 @@ public class ToDoListTest {
 		}
 		
 	}
+	
+	@Test
+	public void testgetAllIncompleteTask() {
+		task1.setComplete(true);
+		task3.setComplete(true);
+		todoList.addTask(task1);
+		todoList.addTask(task2);
+		todoList.addTask(task3);
+		
+		Collection<Task> tasks = todoList.getIncompletedTask();
+		assertEquals(1, tasks.size());
+	}
 
 	@Test
 	public void testAddTask() {
 		assertNotNull(todoList);
+		assertNotNull(task1.getDescription());
 		todoList.addTask(task1);
 		assertEquals(1, todoList.getAllTasks().size());
 		assertEquals(task1, todoList.getTask(task1.getDescription()));
@@ -61,7 +74,7 @@ public class ToDoListTest {
 	public void testRemoveTask() {
 		assertNotNull(todoList);
 		todoList.addTask(task1);
-		todoList.addTask(task2);;
+		todoList.addTask(task2);
 		
 		todoList.removeTask(task1.getDescription());
 		assertNull(todoList.getTask(task1.getDescription()));	
@@ -76,6 +89,21 @@ public class ToDoListTest {
 		
 		Collection<Task> tasks = todoList.getCompletedTasks();
 		assertEquals(2, tasks.size());
+	}
+	
+	@Test
+	public void testcompleteTask() {
+		todoList.addTask(task1);
+		todoList.addTask(task3);
+		
+		assertEquals(false, todoList.getStatus(task1.getDescription()));
+		assertEquals(false, todoList.getStatus(task3.getDescription()));
+		
+		task1.setComplete(true);
+		task3.setComplete(true);
+		
+		assertEquals(true, todoList.getStatus(task1.getDescription()));
+		assertEquals(true, todoList.getStatus(task3.getDescription()));
 	}
 	
 	@Test
@@ -123,5 +151,18 @@ public class ToDoListTest {
 		assertTrue(result);
 		assertNotNull(task);
 		assertEquals("New desc1", task.getDescription());
+ 
+  @Test   
+  public void testNumberofIncompleteTask() {
+		assertEquals(0, todoList.getNumOfIncompleteTask());
+		todoList.addTask(task1);
+		assertEquals(1, todoList.getNumOfIncompleteTask());
+		todoList.completeTask("desc 1");
+		assertEquals(0, todoList.getNumOfIncompleteTask());
+		todoList.addTask(task2);
+		todoList.addTask(task3);
+		assertEquals(2, todoList.getNumOfIncompleteTask());
+		todoList.completeTask("desc 3");
+		assertEquals(1, todoList.getNumOfIncompleteTask());
 	}
 }
