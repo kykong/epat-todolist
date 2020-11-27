@@ -29,6 +29,18 @@ public class ToDoListTest {
 		
 		todoList = null;
 	}
+	
+	@Test
+	public void testGetAllTask() {
+		assertNotNull(todoList);
+		todoList.addTask(task1);
+		todoList.addTask(task2);
+		todoList.addTask(task3);
+		for (Task i : todoList.getAllTasks()) {
+			assertEquals(i, todoList.getTask(i.getDescription()));
+		}
+		
+	}
 
 	@Test
 	public void testAddTask() {
@@ -80,5 +92,18 @@ public class ToDoListTest {
 		
 		assertEquals(true, todoList.getStatus(task1.getDescription()));
 		assertEquals(true, todoList.getStatus(task3.getDescription()));
+	}
+	
+	@Test
+	public void testRemoveTaskOnEmptyListDoesNothing() {
+		todoList.removeTask(task1.getDescription());
+		assertEquals(0, todoList.getAllTasks().size());
+	}
+	
+	@Test
+	public void testRemoveNonExistentTaskReturnsNullTask() {
+		todoList.addTask(task1);
+		Task result = todoList.removeTask(task2.getDescription());
+		assertNull(result);
 	}
 }
