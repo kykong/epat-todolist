@@ -65,4 +65,19 @@ public class ToDoListTest {
 		Collection<Task> tasks = todoList.getCompletedTasks();
 		assertEquals(2, tasks.size());
 	}
+	
+	@Test
+	public void testNumberofIncompleteTask() {
+		assertEquals(0, todoList.getNumOfIncompleteTask());
+		todoList.addTask(task1);
+		assertEquals(1, todoList.getNumOfIncompleteTask());
+		todoList.completeTask("desc 1");
+		assertEquals(0, todoList.getNumOfIncompleteTask());
+		todoList.addTask(task2);
+		todoList.addTask(task3);
+		assertEquals(2, todoList.getNumOfIncompleteTask());
+		todoList.completeTask("desc 3");
+		assertEquals(1, todoList.getNumOfIncompleteTask());
+		
+	}
 }
