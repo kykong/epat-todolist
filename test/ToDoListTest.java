@@ -151,9 +151,10 @@ public class ToDoListTest {
 		assertTrue(result);
 		assertNotNull(task);
 		assertEquals("New desc1", task.getDescription());
+	}
  
-  @Test   
-  public void testNumberofIncompleteTask() {
+  	@Test   
+  	public void testNumberofIncompleteTask() {
 		assertEquals(0, todoList.getNumOfIncompleteTask());
 		todoList.addTask(task1);
 		assertEquals(1, todoList.getNumOfIncompleteTask());
