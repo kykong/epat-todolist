@@ -18,7 +18,6 @@ public class ToDoListTest {
 		task1 = new Task ("desc 1");
 		task2 = new Task ("desc 2");
 		task3 = new Task ("desc 3");
-		
 		todoList = new ToDoList();
 	}
 	@After
@@ -26,7 +25,6 @@ public class ToDoListTest {
 		task1 = null;
 		task2 = null;
 		task3 = null;
-		
 		todoList = null;
 	}
 
@@ -50,7 +48,6 @@ public class ToDoListTest {
 		assertNotNull(todoList);
 		todoList.addTask(task1);
 		todoList.addTask(task2);;
-		
 		todoList.removeTask(task1.getDescription());
 		assertNull(todoList.getTask(task1.getDescription()));	
 	}
@@ -61,8 +58,63 @@ public class ToDoListTest {
 		todoList.addTask(task1);
 		todoList.addTask(task2);
 		todoList.addTask(task3);
-		
 		Collection<Task> tasks = todoList.getCompletedTasks();
 		assertEquals(2, tasks.size());
+	}
+	@Test
+	public void testGetTasks() {
+		task1.setComplete(true);
+		task2.setComplete(true);
+		todoList.addTask(task1);
+		todoList.addTask(task2);
+		todoList.addTask(task3);
+		Collection<Task> tasks = todoList.getTasks(true);
+		assertEquals(2, tasks.size());
+		
+		todoList.getTask(task1.getDescription()).setComplete(false);
+		tasks = todoList.getTasks(false);
+		assertEquals(2, tasks.size());
+	}
+	@Test
+	public void testSearchTask() {
+		todoList.addTask(task1);
+		todoList.addTask(task2);
+		todoList.addTask(task3);
+		Collection<Task> search = todoList.searchTask("desc");
+		assertEquals(3, search.size());
+
+		search = todoList.searchTask("wrong");
+		assertEquals(0, search.size());
+
+		search = todoList.searchTask("1");
+		assertEquals(1, search.size());
+	}
+	@Test
+	public void testRemoveAllTasks() {
+		todoList.addTask(task1);
+		todoList.addTask(task2);
+		todoList.addTask(task3);
+		assertEquals(3, todoList.taskCount());
+		todoList.removeAllTasks();
+		assertEquals(0, todoList.taskCount());
+		
+		todoList.addTask(task1);
+		assertEquals(1, todoList.taskCount());
+		assertFalse(todoList.isEmpty());
+		todoList.removeAllTasks();
+		assertEquals(0, todoList.taskCount());
+		assertTrue(todoList.isEmpty());
+	}
+	@Test
+	public void testEditTaskDescription() {
+		task1.setComplete(true);
+		task2.setComplete(false);
+		todoList.addTask(task1);
+		todoList.addTask(task2);
+		todoList.editTaskDescription(task1.getDescription(), "new 1");
+		assertEquals(task1, todoList.getTask("new 1"));
+		assertNull(todoList.getTask("desc 1"));
+		assertTrue(todoList.getStatus("new 1"));
+		assertEquals(2, todoList.taskCount());
 	}
 }
