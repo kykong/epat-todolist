@@ -41,6 +41,18 @@ public class ToDoListTest {
 		}
 		
 	}
+	
+	@Test
+	public void testgetAllIncompleteTask() {
+		task1.setComplete(true);
+		task3.setComplete(true);
+		todoList.addTask(task1);
+		todoList.addTask(task2);
+		todoList.addTask(task3);
+		
+		Collection<Task> tasks = todoList.getIncompletedTask();
+		assertEquals(1, tasks.size());
+	}
 
 	@Test
 	public void testAddTask() {
