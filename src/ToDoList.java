@@ -47,11 +47,25 @@ public class ToDoList {
 			if (task.isComplete() == true) completedTasks.add(task);
 		return completedTasks;
 	}
+
+  public boolean editDescription(String oldDesc, String newDesc) throws TaskDescriptionAlreadyExistsException {
+		Task existingTask = getTask(newDesc);
+		if (existingTask != null) {
+			throw new TaskDescriptionAlreadyExistsException();
+		}
+				
+		if (removeTask(oldDesc) !=null) {
+			addTask(new Task(newDesc));
+			return true;
+			
+		} else {
+			return false;
+		}
+	}
 	
 	public int getNumOfIncompleteTask() {
 		int noOfCompletedTask = this.getCompletedTasks().size();
 		int totalNumberOfTask = this.getAllTasks().size();
 		return totalNumberOfTask - noOfCompletedTask;
 	}
-	
 }

@@ -120,7 +120,40 @@ public class ToDoListTest {
 	}
 	
 	@Test
-	public void testNumberofIncompleteTask() {
+	public void editNonExistentTaskDescriptionReturnsFalse() throws TaskDescriptionAlreadyExistsException {
+		boolean result = todoList.editDescription("oldTaskDesc", "newTaskDesc");
+		assertFalse(result);
+	}
+	
+	@Test
+	public void editExistingTaskDescriptionToDuplicateDescriptionReturnsException() {
+		todoList.addTask(task1);
+		todoList.addTask(task2);
+		
+		try {
+			todoList.editDescription(task2.getDescription(), task1.getDescription());
+			fail("Expected exception to be thrown");
+			
+		} catch (TaskDescriptionAlreadyExistsException ex) {
+			//ex.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void correctEditExistingTaskDescription() throws TaskDescriptionAlreadyExistsException {
+		todoList.addTask(task1);
+		todoList.addTask(task2);
+		
+		boolean result = todoList.editDescription(task1.getDescription(), "New desc1");
+		Task task = todoList.getTask("New desc1");
+		
+		assertEquals(2, todoList.getAllTasks().size());
+		assertTrue(result);
+		assertNotNull(task);
+		assertEquals("New desc1", task.getDescription());
+ 
+  @Test   
+  public void testNumberofIncompleteTask() {
 		assertEquals(0, todoList.getNumOfIncompleteTask());
 		todoList.addTask(task1);
 		assertEquals(1, todoList.getNumOfIncompleteTask());
