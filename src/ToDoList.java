@@ -48,4 +48,10 @@ public class ToDoList {
 		return completedTasks;
 	}
 	
+	public int getNumOfIncompleteTask() {
+		int noOfCompletedTask = this.getCompletedTasks().size();
+		int totalNumberOfTask = this.getAllTasks().size();
+		return totalNumberOfTask - noOfCompletedTask;
+	}
+	
 }
