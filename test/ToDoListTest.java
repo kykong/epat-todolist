@@ -90,6 +90,18 @@ public class ToDoListTest {
 		assertEquals(2, todoList.getNumOfIncompleteTask());
 		todoList.completeTask("desc 3");
 		assertEquals(1, todoList.getNumOfIncompleteTask());
-		
+	}
+	
+	@Test
+	public void testRemoveTaskOnEmptyListDoesNothing() {
+		todoList.removeTask(task1.getDescription());
+		assertEquals(0, todoList.getAllTasks().size());
+	}
+	
+	@Test
+	public void testRemoveNonExistentTaskReturnsNullTask() {
+		todoList.addTask(task1);
+		Task result = todoList.removeTask(task2.getDescription());
+		assertNull(result);
 	}
 }
