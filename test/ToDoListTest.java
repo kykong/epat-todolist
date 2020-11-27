@@ -85,7 +85,7 @@ public class ToDoListTest {
 	}
 	
 	@Test
-	public void testRemoveNonExistentTaskReturnsNull() {
+	public void testRemoveNonExistentTaskReturnsNullTask() {
 		todoList.addTask(task1);
 		Task result = todoList.removeTask(task2.getDescription());
 		assertNull(result);
