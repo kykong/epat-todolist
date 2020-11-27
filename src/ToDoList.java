@@ -22,6 +22,16 @@ public class ToDoList {
 		};
 		return false;
 	}
+	public boolean editTaskDescription(String oldDesc, String newDesc) {
+		Task task = tasks.get(oldDesc);
+		if (task == null) {
+			return false;
+		} else {
+			tasks.remove(oldDesc);
+			tasks.put(newDesc, task);
+			return true;
+		}
+	}
 	public Task getTask(String description) {
 		return tasks.get(description);
 	}
@@ -38,5 +48,30 @@ public class ToDoList {
 		for (Task task: allTasks) 
 			if (task.isComplete() == true) completedTasks.add(task);
 		return completedTasks;
+	}
+	public Collection<Task> getTasks(Boolean completed) {
+		Collection<Task> filteredTasks = new ArrayList<Task> ();
+		Collection<Task> allTasks = new ArrayList<Task> ();
+		allTasks = getAllTasks();
+		for (Task task: allTasks) 
+			if (task.isComplete() == completed) filteredTasks.add(task);
+		return filteredTasks;
+	}
+	public Collection<Task> searchTask(String query) {
+		Collection<Task> searchResults = new ArrayList<Task> ();
+		Collection<Task> allTasks = new ArrayList<Task> ();
+		allTasks = getAllTasks();
+		for (Task task: allTasks) 
+			if (task.getDescription().contains(query)) searchResults.add(task);
+		return searchResults;
+	}
+	public int taskCount() {
+		return tasks.size();
+	}
+	public void removeAllTasks() {
+		tasks.clear();
+	}
+	public boolean isEmpty() {
+		return tasks.isEmpty();
 	}
 }
