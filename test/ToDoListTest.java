@@ -65,4 +65,17 @@ public class ToDoListTest {
 		Collection<Task> tasks = todoList.getCompletedTasks();
 		assertEquals(2, tasks.size());
 	}
+	
+	@Test
+	public void testRemoveTaskOnEmptyListDoesNothing() {
+		todoList.removeTask(task1.getDescription());
+		assertEquals(0, todoList.getAllTasks().size());
+	}
+	
+	@Test
+	public void testRemoveNonExistentTaskReturnsNull() {
+		todoList.addTask(task1);
+		Task result = todoList.removeTask(task2.getDescription());
+		assertNull(result);
+	}
 }
