@@ -29,6 +29,18 @@ public class ToDoListTest {
 		
 		todoList = null;
 	}
+	
+	@Test
+	public void testGetAllTask() {
+		assertNotNull(todoList);
+		todoList.addTask(task1);
+		todoList.addTask(task2);
+		todoList.addTask(task3);
+		for (Task i : todoList.getAllTasks()) {
+			assertEquals(i, todoList.getTask(i.getDescription()));
+		}
+		
+	}
 
 	@Test
 	public void testAddTask() {
