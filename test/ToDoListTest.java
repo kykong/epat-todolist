@@ -45,6 +45,7 @@ public class ToDoListTest {
 	@Test
 	public void testAddTask() {
 		assertNotNull(todoList);
+		assertNotNull(task1.getDescription());
 		todoList.addTask(task1);
 		assertEquals(1, todoList.getAllTasks().size());
 		assertEquals(task1, todoList.getTask(task1.getDescription()));
@@ -61,7 +62,7 @@ public class ToDoListTest {
 	public void testRemoveTask() {
 		assertNotNull(todoList);
 		todoList.addTask(task1);
-		todoList.addTask(task2);;
+		todoList.addTask(task2);
 		
 		todoList.removeTask(task1.getDescription());
 		assertNull(todoList.getTask(task1.getDescription()));	
@@ -76,6 +77,21 @@ public class ToDoListTest {
 		
 		Collection<Task> tasks = todoList.getCompletedTasks();
 		assertEquals(2, tasks.size());
+	}
+	
+	@Test
+	public void testcompleteTask() {
+		todoList.addTask(task1);
+		todoList.addTask(task3);
+		
+		assertEquals(false, todoList.getStatus(task1.getDescription()));
+		assertEquals(false, todoList.getStatus(task3.getDescription()));
+		
+		task1.setComplete(true);
+		task3.setComplete(true);
+		
+		assertEquals(true, todoList.getStatus(task1.getDescription()));
+		assertEquals(true, todoList.getStatus(task3.getDescription()));
 	}
 	
 	@Test
